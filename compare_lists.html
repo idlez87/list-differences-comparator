@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools: Compare 2 lists to find list differences</title>
+    <meta name="description" content="A simple tool to compare two lists and find their differences and similarities.">
+    <meta name="keywords" content="tools, compare lists, list differences, list similarities, web tool">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .list-container {
+            width: 48%;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function compareLists() {
+            // Get the left and right list text areas
+            var leftList = document.getElementById("left-list").value.split('\n');
+            var rightList = document.getElementById("right-list").value.split('\n');
+
+            // Initialize arrays to store differences and similarities
+            var differences = [];
+            var similarities = [];
+            var uniqueSimilarities = new Set();
+
+            // Compare the lists
+            leftList.forEach(function(item) {
+                if (!rightList.includes(item)) {
+                    differences.push(item);
+                } else {
+                    similarities.push(item);
+                    uniqueSimilarities.add(item);
+                }
+            });
+
+            rightList.forEach(function(item) {
+                if (!leftList.includes(item)) {
+                    differences.push(item);
+                } else {
+                    similarities.push(item);
+                    uniqueSimilarities.add(item);
+                }
+            });
+
+            // Display the differences, similarities, and unique similarities
+            document.getElementById("differences").value = differences.join('\n');
+            document.getElementById("similarities").value = similarities.join('\n');
+            document.getElementById("unique-similarities").value = Array.from(uniqueSimilarities).join('\n');
+        }
+    </script>
+</head>
+<body>
+    <h1>Tools: Compare 2 lists to find list differences</h1>
+
+    <div class="container">
+        <div class="list-container">
+            <h3>Left List:</h3>
+            <textarea id="left-list" placeholder="Enter items for left list"></textarea>
+        </div>
+
+        <div class="list-container">
+            <h3>Right List:</h3>
+            <textarea id="right-list" placeholder="Enter items for right list"></textarea>
+        </div>
+    </div>
+
+    <button onclick="compareLists()">Compare Lists</button>
+
+    <div class="container">
+        <div class="list-container">
+            <h3>Differences:</h3>
+            <textarea id="differences" readonly></textarea>
+        </div>
+
+        <div class="list-container">
+            <h3>Similarities:</h3>
+            <textarea id="similarities" readonly></textarea>
+        </div>
+
+        <div class="list-container">
+            <h3>Unique Similarities:</h3>
+            <textarea id="unique-similarities" readonly></textarea>
+        </div>
+    </div>
+</body>
+</html>
